@@ -1,134 +1,190 @@
 import streamlit as st
 import google.generativeai as genai
 
-# 1. Premium Cyberpunk/Corporate Page Setup
-st.set_page_config(page_title="IncuBot Matrix | Multi-Agent Network", page_icon="⚡", layout="wide")
+# 1. Page Configuration - Clean & Professional Layout
+st.set_page_config(page_title="IncuBot AI | Multi-Agent Network", page_icon="🚀", layout="wide")
 
-# Custom Injecting Enterprise Theme & Layout Rules
+# Modern Minimalist Enterprise Styling
 st.markdown("""
     <style>
-    body { background-color: #0b0f19; }
-    .stApp { background-color: #0b0f19; }
-    .agent-card {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 5px solid #3b82f6;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    .step-box {
+        background-color: #f8fafc;
+        border-left: 5px solid #2563eb;
+        border-top: 1px solid #e2e8f0;
+        border-right: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 10px;
     }
-    .agent-active { border-left-color: #10b981; }
-    .metric-value {
-        font-family: 'Courier New', monospace;
-        font-size: 24px;
+    .check-text {
+        color: #16a34a;
         font-weight: bold;
-        color: #10b981;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Secure Key Initialization
+# Secure API Key Setup
 api_key = st.secrets.get("GEMINI_API_KEY", "")
 if api_key:
     genai.configure(api_key=api_key)
 else:
-    st.error("🚨 Configuration Error: GEMINI_API_KEY is missing in Streamlit Secrets.")
+    st.error("Configuration Error: GEMINI_API_KEY missing in Streamlit Secrets.")
 
-# --- MULTI-AGENT COMPONENT CORE LOGIC ---
-def run_agent_1(sector, audience):
+# =====================================================================
+# 🧠 BACKEND ENGINE: PURE ENGLISH PROMPTS FOR BEST LLM REASONING
+# =====================================================================
+
+def agent_1_market_analysis(field, target_audience):
+    """Agent 1: Continuous NLP Text Processing to Extract Gaps"""
     model = genai.GenerativeModel('gemini-1.5-flash')
-    prompt = f"Act as an NLP Market Intelligence Agent. Analyze raw customer complaints and trends for '{sector}' targeting '{audience}'. Give a structured report with clear sections on Market Gaps, Psychological Triggers, and Language Metaphors used by customers. Use rich formatting and bullets."
-    return model.generate_content(prompt).text
+    
+    english_prompt = f"""
+    You are an expert market intelligence AI agent specializing in Natural Language Processing (NLP) sentiment extraction.
+    The user is launching a startup in the '{field}' sector, targeting the audience group: '{target_audience}'.
+    
+    Task: Extract and outline the core consumer pain points, underserved market gaps, and unmet desires based on customer behavioral patterns.
+    
+    Output Formatting Rule: Write the response in highly readable, professional business language using clear bullet points. Break it down into logical subsections.
+    """
+    return model.generate_content(english_prompt).text
 
-def run_agent_2(sector, runway, context_1):
+def agent_2_risk_audit(field, budget_tier, market_context):
+    """Agent 2: Venture Risk & Capital Runway Auditor"""
     model = genai.GenerativeModel('gemini-1.5-flash')
-    prompt = f"Act as a Venture Capital Risk Auditor. Read this NLP market analysis: '{context_1}'. For a company entering the '{sector}' space with a '{runway}' runway, detail exactly 3 massive tactical failures or regulatory traps they will hit. Be brutal, highly technical, and precise."
-    return model.generate_content(prompt).text
+    
+    english_prompt = f"""
+    You are a strict financial risk consultant and venture capital auditor.
+    The business is operating in the '{field}' industry under a '{budget_tier}' financial runway constraint.
+    
+    Task: Review the market intelligence context provided by Agent 1 below:
+    [Context]: {market_context}
+    
+    Isolate and explicitly state exactly 3 critical operational risks, legal bottlenecks, or financial pitfalls that could cause early-stage bankruptcy for this startup idea under this specific budget constraint.
+    
+    Output Formatting Rule: Write in clean, concise, point-by-point format. Keep the tone highly analytical and cautionary.
+    """
+    return model.generate_content(english_prompt).text
 
-def run_agent_3(idea, context_1, context_2):
+def agent_3_roadmap_orchestrator(idea, market_context, risk_context):
+    """Agent 3: Strategic Blueprint Generator"""
     model = genai.GenerativeModel('gemini-1.5-flash')
-    prompt = f"Act as the Chief Architect Node. Combine the Market Gaps: '{context_1}' and Risk Vector Logs: '{context_2}' to design an engineering and launch roadmap for this core vision: '{idea}'. Output a detailed week-by-week sprint for Month 1."
-    return model.generate_content(prompt).text
+    
+    english_prompt = f"""
+    You are a premier startup incubation director and growth architect.
+    The founder's core vision is: '{idea}'.
+    
+    Task: Synthesize the customer gaps from Agent 1 and the risk mitigations from Agent 2 to build a structured, step-by-step tactical launch playbook.
+    [Agent 1 Context]: {market_context}
+    [Agent 2 Context]: {risk_context}
+    
+    Generate a detailed week-by-week roadmap for Month 1 (Week 1 through Week 4) detailing concrete execution steps the founder must take.
+    
+    Output Formatting Rule: Use clean markdown headers for each week. Keep the language direct, actionable, and objective.
+    """
+    return model.generate_content(english_prompt).text
 
-# --- SYSTEM UI LAYOUT ---
-st.title("⚡ IncuBot Matrix: Autonomous Multi-Agent Node")
-st.markdown("##### System Architecture: **Sequential Token-Passing Orchestration Matrix** | Core Node: Molly Saxena (CSE-AIML)")
+# =====================================================================
+# 🖥️ CLEAN & PROFESSIONAL ENTERPRISE INTERFACE
+# =====================================================================
+
+st.title("🚀 IncuBot AI: Multi-Agent Incubation Network")
+st.markdown("An automated pipeline orchestrating specialized AI nodes for comprehensive market analysis, risk mitigation, and launch execution planning.")
 st.markdown("---")
 
-# Metrics Overview Strip
-c1, c2, c3, c4 = st.columns(4)
-with c1:
-    st.markdown("<div class='agent-card'><p style='color:#94a3b8; margin:0;'>NETWORK STATUS</p><p class='metric-value'>ONLINE // SECURE</p></div>", unsafe_allow_html=True)
-with c2:
-    st.markdown("<div class='agent-card'><p style='color:#94a3b8; margin:0;'>TOTAL DEPLOYED NODES</p><p class='metric-value'>3 Active Agents</p></div>", unsafe_allow_html=True)
-with c3:
-    st.markdown("<div class='agent-card'><p style='color:#94a3b8; margin:0;'>PIPELINE STRUCTURE</p><p class='metric-value'>Sequential Chain</p></div>", unsafe_allow_html=True)
-with c4:
-    st.markdown("<div class='agent-card'><p style='color:#94a3b8; margin:0;'>CORE ENGINE LAYER</p><p class='metric-value'>Gemini Flash Node</p></div>", unsafe_allow_html=True)
+col_inputs, col_results = st.columns([1, 1.2])
 
-st.markdown("<br>", unsafe_allow_html=True)
-
-col_input, col_output = st.columns([1, 1.3])
-
-with col_input:
-    st.subheader("🛠️ Environmental Directives")
+with col_inputs:
+    st.markdown("### 📝 Strategic Input Directives")
     
-    sector = st.selectbox("Ecosystem Domain", ["DeFi / FinTech Layer", "B2B SaaS / Enterprise Infrastructure", "EdTech / Adaptive Learning Systems", "HealthTech / BioInformatics", "DeepTech / Autonomous Agents"])
-    runway = st.selectbox("Capital Deployment Vector", ["Lean Bootstrap Pipeline (Low Buffer)", "Angel / Seed Stage Injection (Mid Buffer)", "Venture Scale Capital (Aggressive Burn)"])
-    audience = st.text_input("Target Audience Parameters", placeholder="e.g., Independent doctors, tier-2 retail merchants...")
+    # Professionalized Field Selection
+    field = st.selectbox(
+        "Industry Ecosystem / Vertical", 
+        [
+            "Technology & Software (SaaS, Mobile Apps, Cloud Infrastructure)", 
+            "Healthcare & Medical Technology (Clinics, Digital Health, Biotech)", 
+            "Education Technology (E-Learning Platforms, Adaptive Systems)", 
+            "E-Commerce & Retail Logistics (D2C Brands, Supply Chain, Marketplaces)", 
+            "FoodTech & Hospitality (Cloud Kitchens, AgriTech, Quick Commerce)"
+        ]
+    )
     
-    st.markdown("---")
-    st.subheader("💡 Founder Core Architecture Blueprint")
-    idea = st.text_area("Input business vision / technical roadmap framework:", height=220, placeholder="Describe your product core mechanics, tech stack, and target value loop...")
+    # Professionalized Capital/Budget Runway Selection
+    budget_tier = st.selectbox(
+        "Available Capital Scale & Runway", 
+        [
+            "Lean Bootstrapped Tier (Self-funded, minimal operational buffer)", 
+            "Angel / Seed Injection Tier (Moderate buffer, early hiring capacity)", 
+            "Venture-Scale Scale Tier (Substantial capital allocation, aggressive burn)"
+        ]
+    )
+    
+    # Formatted User Text Inputs
+    target_audience = st.text_input(
+        "Target Demographic / Audience Parameters", 
+        placeholder="e.g., Undergraduate college students, tier-2 retail merchants, busy working parents..."
+    )
+    
+    idea = st.text_area(
+        "Startup Core Concept & Architecture Description", 
+        height=150, 
+        placeholder="e.g., An AI-driven gamified math learning platform that utilizes adaptive micro-lessons to help primary school students learn complex concepts through interactive puzzle mechanics..."
+    )
     
     st.markdown("<br>", unsafe_allow_html=True)
-    deploy_btn = st.button("🚀 TRIGGER AGENT NETWORK EXECUTIONS", type="primary", use_container_width=True)
+    submit_btn = st.button("🚀 EXECUTE MULTI-AGENT ANALYSIS", type="primary", use_container_width=True)
 
-with col_output:
-    st.subheader("🖥️ Agent Matrix Operations Log")
+with col_results:
+    st.markdown("### 🖥️ Real-Time Node Orchestration Matrix")
     
-    if deploy_btn:
-        if idea.strip() != "" and audience.strip() != "":
+    if submit_btn:
+        if idea.strip() != "" and target_audience.strip() != "":
             
-            # --- AGENT 1 PROCESS LOOP ---
-            a1_status = st.markdown("<div class='agent-card agent-active'>⚙️ <strong>Deploying Agent 1:</strong> Mining unstructured market text grids and sentiment matrix arrays...</div>", unsafe_allow_html=True)
-            a1_res = run_agent_1(sector, audience)
-            a1_status.markdown("<div class='agent-card'>✅ <strong>Agent 1 Operations Complete:</strong> Semantic intelligence matrix extracted successfully.</div>", unsafe_allow_html=True)
+            # --- AGENT 1 EXECUTION ---
+            with st.container():
+                st.markdown("<div class='step-box'>🕵️‍♂️ <strong>Agent 1 (Market Analyst):</strong> Extracting customer behavioral insights and market gap arrays...</div>", unsafe_allow_html=True)
+                res_1 = agent_1_market_analysis(field, target_audience)
+                st.markdown("<span class='check-text'>✓ Agent 1 processing complete. Semantic data transferred downstream.</span>", unsafe_allow_html=True)
             
-            # --- AGENT 2 PROCESS LOOP ---
-            a2_status = st.markdown("<div class='agent-card agent-active'>⚙️ <strong>Deploying Agent 2:</strong> Passing Agent 1 context arrays downstream to execute brutal risk vector audits...</div>", unsafe_allow_html=True)
-            a2_res = run_agent_2(sector, runway, a1_res)
-            a2_status.markdown("<div class='agent-card'>✅ <strong>Agent 2 Operations Complete:</strong> 3 Structural risk layers identified and flagged.</div>", unsafe_allow_html=True)
+            st.markdown("<br>", unsafe_allow_html=True)
             
-            # --- AGENT 3 PROCESS LOOP ---
-            a3_status = st.markdown("<div class='agent-card agent-active'>⚙️ <strong>Deploying Agent 3:</strong> Orchestrating final synthesis engine to map the launch blueprint...</div>", unsafe_allow_html=True)
-            a3_res = run_agent_3(idea, a1_res, a2_res)
-            a3_status.markdown("<div class='agent-card'>✅ <strong>Agent 3 Operations Complete:</strong> Final corporate strategy compiled.</div>", unsafe_allow_html=True)
-            
-            st.success("🎉 Multi-Agent Core Synchronized Successfully!")
-            st.markdown("### 📊 Consolidated Strategy Console Layout")
-            
-            # Beautiful Tabbed Panel for Output Sorting
-            tab1, tab2, tab3 = st.tabs(["🔍 Market Intelligence (Agent 1)", "🚨 Risk Assessment (Agent 2)", "📅 4-Week Blueprint (Agent 3)"])
-            
-            with tab1:
-                st.markdown(a1_res)
-            with tab2:
-                st.markdown(a2_res)
-            with tab3:
-                st.markdown(a3_res)
+            # --- AGENT 2 EXECUTION ---
+            with st.container():
+                st.markdown("<div class='step-box'>💰 <strong>Agent 2 (Risk Auditor):</strong> Assessing financial vulnerabilities and compliance constraints...</div>", unsafe_allow_html=True)
+                res_2 = agent_2_risk_audit(field, budget_tier, res_1)
+                st.markdown("<span class='check-text'>✓ Agent 2 processing complete. Structural risks flagged and mapped.</span>", unsafe_allow_html=True)
                 
-            # Formatting full text data for download asset feature
-            full_report_text = f"=== INCUBOT AI STRATEGY REPORT ===\n\n[PART 1: NLP MARKET RESEARCH]\n{a1_res}\n\n[PART 2: RISK AUDIT]\n{a2_res}\n\n[PART 3: EXECUTION SPRINT]\n{a3_res}"
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            # --- AGENT 3 EXECUTION ---
+            with st.container():
+                st.markdown("<div class='step-box'>📋 <strong>Agent 3 (Startup Coach):</strong> Synthesizing inputs to generate operational launch playbook...</div>", unsafe_allow_html=True)
+                res_3 = agent_3_roadmap_orchestrator(idea, res_1, res_2)
+                st.markdown("<span class='check-text'>✓ Agent 3 processing complete. Final compilation synchronized.</span>", unsafe_allow_html=True)
             
             st.markdown("---")
+            st.success("✨ Strategic Blueprint Compiled Successfully!")
+            
+            # Clean Corporate Sorted Output Tabs
+            tab1, tab2, tab3 = st.tabs(["🔍 Market Gaps & Insights", "🚨 Risk & Runway Audit", "📅 4-Week Launch Roadmap"])
+            
+            with tab1:
+                st.markdown(res_1)
+            with tab2:
+                st.markdown(res_2)
+            with tab3:
+                st.markdown(res_3)
+                
+            # Professional Download Structure
+            full_report = f"=== INCUBOT AI STRATEGIC REPORT ===\n\n[SECTION 1: MARKET & CUSTOMER RESEARCH]\n{res_1}\n\n[SECTION 2: BUDGET & STRUCTURAL RISKS]\n{res_2}\n\n[SECTION 3: 4-WEEK ACTION MATRIX]\n{res_3}"
+            st.markdown("<br>", unsafe_allow_html=True)
             st.download_button(
-                label="📥 Download Full Consolidated Operational Strategy Blueprint",
-                data=full_report_text,
-                file_name="incubot_strategy_blueprint.txt",
+                label="📥 Download Complete Operational Strategy Document",
+                data=full_report,
+                file_name="strategic_startup_blueprint.txt",
                 mime="text/plain",
                 use_container_width=True
             )
             
         else:
-            st.warning("Execution Halted: Ensure both Target Audience Parameters and Core Architecture fields are populated.")
+            st.warning("Validation Error: Please populate both the 'Target Demographic' and 'Startup Core Concept' fields before executing the network pipeline.")
