@@ -127,4 +127,8 @@ with col_output:
                 data=full_report_text,
                 file_name="incubot_strategy_blueprint.txt",
                 mime="text/plain",
-                use_container_
+                use_container_width=True
+            )
+            
+        else:
+            st.warning("Execution Halted: Ensure both Target Audience Parameters and Core Architecture fields are populated.")
