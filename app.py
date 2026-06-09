@@ -1,10 +1,9 @@
 import streamlit as st
 import google.generativeai as genai
 
-# 1. Page Config
+# Page Setup
 st.set_page_config(page_title="IncuBot Pro | Multi-Agent Hub", page_icon="🤖", layout="wide")
 
-# Styling
 st.markdown("""
     <style>
     .agent-box { background-color: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid #1e293b; margin-bottom: 15px; }
@@ -12,17 +11,15 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- SECURE KEY EXTRACTION ---
-# Yeh line tumhari special enterprise key ko properly fetch karegi
-api_key = st.secrets.get("GEMINI_API_KEY", "YOUR_LOCAL_GEMINI_API_KEY")
+# Secure Key Extraction
+api_key = st.secrets.get("GEMINI_API_KEY", "")
 
-# Hard authentication mapping for enterprise keys
-if api_key and api_key != "YOUR_LOCAL_GEMINI_API_KEY":
+if api_key:
     genai.configure(api_key=api_key)
 else:
-    st.error("API Key missing in Streamlit Secrets!")
+    st.error("🚨 API Key missing in Streamlit Secrets! Please add it in Advanced Settings.")
 
-# --- MULTI-AGENT FUNCTIONS ---
+# Multi-Agent Functions
 def run_nlp_researcher_agent(sector, audience):
     model = genai.GenerativeModel('gemini-1.5-flash')
     system = "You are a specialized NLP Market Analyst. Extract customer pain points in bullets."
@@ -41,7 +38,7 @@ def run_genai_orchestrator_agent(idea, nlp_context, risk_context):
     response = model.generate_content(f"{system}\n\nIdea: {idea}\nNLP: {nlp_context}\nRisks: {risk_context}")
     return response.text
 
-# --- UI INTERFACE ---
+# Interface Layout
 st.title("🤖 IncuBot Pro: Genuine Multi-Agent Network")
 st.markdown("##### Enterprise Design: **Orchestrated Multi-Agent Sequential Chain**")
 st.markdown("---")
@@ -65,17 +62,14 @@ with col2:
     if deploy_network:
         if idea.strip() != "" and audience.strip() != "":
             
-            # Agent 1
             st.markdown("<div class='agent-box'><span class='console-text'>🔄 Agent 1 Running...</span></div>", unsafe_allow_html=True)
             a1_out = run_nlp_researcher_agent(sector, audience)
             st.markdown("<div class='agent-box'><strong>🟢 Agent 1 Complete</strong></div>", unsafe_allow_html=True)
             
-            # Agent 2
             st.markdown("<div class='agent-box'><span class='console-text'>🔄 Agent 2 Running...</span></div>", unsafe_allow_html=True)
             a2_out = run_financial_auditor_agent(sector, runway, a1_out)
             st.markdown("<div class='agent-box'><strong>🟢 Agent 2 Complete</strong></div>", unsafe_allow_html=True)
             
-            # Agent 3
             st.markdown("<div class='agent-box'><span class='console-text'>🔄 Agent 3 Running...</span></div>", unsafe_allow_html=True)
             final_report = run_genai_orchestrator_agent(idea, a1_out, a2_out)
             st.markdown("<div class='agent-box'><strong>🟢 Agent 3 Complete</strong></div>", unsafe_allow_html=True)
