@@ -14,7 +14,7 @@ st.markdown("""
     
     /* Input Container Card */
     .input-card {
-        background: #ffffff;
+        background: FFFCEB;
         border: 1px solid #e2e8f0;
         border-radius: 12px;
         padding: 24px;
