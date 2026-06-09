@@ -24,7 +24,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Secure API Key Setup
+# Secure API Key Setup from Streamlit Secrets
 api_key = st.secrets.get("GEMINI_API_KEY", "")
 if api_key:
     genai.configure(api_key=api_key)
@@ -97,35 +97,32 @@ col_inputs, col_results = st.columns([1, 1.2])
 with col_inputs:
     st.markdown("### 📝 Strategic Input Directives")
     
-    # Professionalized Field Selection
+    # Fixed Missing Commas and Cleaned Up List Formatting
     field = st.selectbox(
         "Industry Ecosystem / Vertical", 
         [
             "Technology & Software", 
             "Healthcare & Medical Technology", 
             "Education Technology", 
-            "E-Commerces", 
-            "FoodTech "
-            "Hospitality "
+            "E-Commerce", 
+            "FoodTech & Hospitality"
         ]
     )
     
-    # Professionalized Capital/Budget Runway Selection
+    # Capital/Budget Runway Selection
     budget_tier = st.selectbox(
-       "What is your starting budget?", 
+        "What is your starting budget?", 
         [
-    
-        "Small Budget ", 
-        "Medium Budget", 
-        "Large Budget"
-    
+            "Small Budget", 
+            "Medium Budget", 
+            "Large Budget"
         ]
     )
     
-    # Formatted User Text Inputs
+    # Clean User Text Inputs
     target_audience = st.text_input(
-        "Who are your real customers?.......", 
-        placeholder="college students, housewives, startups,........"
+        "Who are your real customers?", 
+        placeholder="e.g., college students, housewives, startups..."
     )
     
     idea = st.text_area(
@@ -190,4 +187,4 @@ with col_results:
             )
             
         else:
-            st.warning("Validation Error: Please populate both the 'Target Demographic' and 'Startup Core Concept' fields before executing the network pipeline.")
+            st.warning("Validation Error: Please populate both the 'Who are your real customers?' and 'Startup Core Concept' fields before executing the network pipeline.")
