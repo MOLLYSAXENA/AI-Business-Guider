@@ -101,28 +101,31 @@ with col_inputs:
     field = st.selectbox(
         "Industry Ecosystem / Vertical", 
         [
-            "Technology & Software (SaaS, Mobile Apps, Cloud Infrastructure)", 
-            "Healthcare & Medical Technology (Clinics, Digital Health, Biotech)", 
-            "Education Technology (E-Learning Platforms, Adaptive Systems)", 
-            "E-Commerce & Retail Logistics (D2C Brands, Supply Chain, Marketplaces)", 
-            "FoodTech & Hospitality (Cloud Kitchens, AgriTech, Quick Commerce)"
+            "Technology & Software", 
+            "Healthcare & Medical Technology", 
+            "Education Technology", 
+            "E-Commerces", 
+            "FoodTech "
+            "Hospitality "
         ]
     )
     
     # Professionalized Capital/Budget Runway Selection
     budget_tier = st.selectbox(
-        "Available Capital Scale & Runway", 
+       "What is your starting budget?", 
         [
-            "Lean Bootstrapped Tier (Self-funded, minimal operational buffer)", 
-            "Angel / Seed Injection Tier (Moderate buffer, early hiring capacity)", 
-            "Venture-Scale Scale Tier (Substantial capital allocation, aggressive burn)"
+    
+        "Small Budget ", 
+        "Medium Budget", 
+        "Large Budget"
+    
         ]
     )
     
     # Formatted User Text Inputs
     target_audience = st.text_input(
-        "Target Demographic / Audience Parameters", 
-        placeholder="e.g., Undergraduate college students, tier-2 retail merchants, busy working parents..."
+        "Who are your real customers?.......", 
+        placeholder="college students, housewives, startups,........"
     )
     
     idea = st.text_area(
