@@ -20,7 +20,7 @@ A simple Streamlit app that uses 4 connected AI agents to turn a startup idea in
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/yourusername/ai-business-guider.git](https://github.com/yourusername/ai-business-guider.git)
+git clone [https://github.com/MOLLYSAXENA/ai-business-guider.git](https://github.com/MOLLYSAXENA/ai-business-guider.git)
 cd ai-business-guider
 
 ```
