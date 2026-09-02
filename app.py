@@ -59,7 +59,7 @@ else:
     st.error("⚠️ GEMINI_API_KEY is missing from Streamlit Secrets.")
     st.stop()
 
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-1.5-flash"
 
 # ── Agents ────────────────────────────────────────────────────────────────────
 def agent_market(field, audience):
