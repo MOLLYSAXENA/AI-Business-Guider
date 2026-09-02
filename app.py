@@ -2,6 +2,7 @@ import io
 import re
 import streamlit as st
 import google.generativeai as genai
+import datetime
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
@@ -317,8 +318,20 @@ st.markdown("<br>", unsafe_allow_html=True)
 run = st.button("🚀  Generate Full Business Guide", type="primary", use_container_width=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
+MAX_DAILY_RUNS = 10
+today = str(datetime.date.today())
+   
+if "last_run_date" not in st.session_state or st.session_state.last_run_date != today:
+    st.session_state.last_run_date = today
+    st.session_state.daily_run_count = 0
+
 # ── Pipeline ───────────────────────────────────────────────────────────────────
 if run:
+    if st.session_state.daily_run_count >= MAX_DAILY_RUNS:
+        st.error(f"⚠️ Daily limit reached! Only {MAX_DAILY_RUNS} guides per day are allowed to save API quota.")
+        st.stop()
+  
+    st.session_state.daily_run_count += 1
     if not audience.strip() or not idea.strip():
         st.markdown('<div class="warn-box">⚠️ Please fill in both <b>customers</b> and <b>startup idea</b>.</div>', unsafe_allow_html=True)
         st.stop()
